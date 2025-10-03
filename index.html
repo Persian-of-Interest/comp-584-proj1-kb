@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <title>Email Campaign</title>
@@ -46,72 +47,285 @@
         line-height: inherit;
       }
 
-	  		/* Universal styles for links and stuff */
-		
+      /* Universal styles for links and stuff */
+      a { transition: all 160ms ease-in-out; }
+      .btn {
+        background-color:#ccb520;
+        color:white;
+        text-decoration:none;
+        padding:12px 24px;
+        font-size:16px;
+        border-radius:4px;
+        display:inline-block;
+        border:0;
+        cursor:pointer;
+      }
+      .btn:hover { transform: translateY(-3px); } /* subtle lift, non-opacity/scale property (translateY) */
 
-			/* Responsive styles */
+      /* Basic typography */
+      h1 { margin:0; font-size:32px; color:#333333; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; }
+      p { margin:0 0 16px 0; color:#333333; font-family: Arial, Helvetica, sans-serif; }
 
-    </style>
+      /* Two-column and three-column grid styles (table-based for email clients) */
+      .two-col { width:100%; }
+      .two-col .col { display:inline-block; vertical-align:top; width:50%; }
+      .three-col .col { display:inline-block; vertical-align:top; width:31%; }
+
+      /* Make sure images are fluid */
+      .fluid { width:100%; max-width:100%; height:auto; display:block; }
+
+      /* Checkbox/radio interactivity styling (hidden inputs) */
+      .hidden-input { display:none !important; max-height:0; visibility:hidden; opacity:0; }
+
+      /* Toggle content - default hidden (for clients that support :checked) */
+      .toggle-content { display:none; max-height:0; overflow:hidden; transition:max-height 300ms ease-in-out; }
+
+      /* Radio switch panels - default hide */
+      .radio-panel { display:none; max-height:0; overflow:hidden; transition:max-height 300ms ease-in-out; }
+
+      /* Animations using transform/translate/rotate & background-position (not opacity/scale) */
+      @keyframes slideInFromLeft {
+        0% { transform: translateX(-40px) rotate(-2deg); }
+        100% { transform: translateX(0) rotate(0); }
+      }
+      @keyframes bgShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Apply animations where supported */
+      .animate-hero { animation: slideInFromLeft 700ms ease-out both; }
+      .animate-bg { animation: bgShift 10s linear infinite; background-size:200% 200%; }
+
+      /* For Outlook (fallback) — ensure toggle content is visible */
+      .fallback-visible { display:block !important; max-height:none !important; }
+
+      /* Responsive styles */
+      @media screen and (max-width:600px) {
+        h1 { font-size:24px !important; }
+        p { font-size:15px !important; line-height:22px !important; }
+        .two-col .col, .three-col .col { display:block !important; width:100% !important; }
+        .btn { width:100% !important; box-sizing:border-box; text-align:center; display:block !important; padding:14px !important; }
+        .meta { font-size:13px !important; }
+      }
+
+      /* Interactivity selectors relying on :checked — works in Apple Mail, some web clients */
+      /* Checkbox: when #more-info is checked, show .more-details that follows */
+      #more-info:checked + .more-details { display:block !important; max-height:800px !important; }
+      /* Radio: show panels when corresponding radio is checked */
+      #radio-a:checked ~ .radio-panels .panel-a { display:block !important; max-height:800px !important; }
+      #radio-b:checked ~ .radio-panels .panel-b { display:block !important; max-height:800px !important; }
+      #radio-c:checked ~ .radio-panels .panel-c { display:block !important; max-height:800px !important; }
+
+      /* Small visual styling for columns */
+      .feature { padding:12px; border-radius:8px; text-align:center; }
+      .feature h3 { margin:8px 0 6px 0; font-size:18px; }
+      .feature p { font-size:14px; margin:0; }
+      .divider { height:1px; background:#e0e0e0; margin:16px 0; }
+
+      /* ensure links inside footers are tappable on mobile */
+      .footer a { color:#999999; text-decoration:underline; }
+</style>
+```
+
   </head>
   <body id="body" style="margin:0; padding:0;">
-		<!-- Wrapper -->
+    <!-- Wrapper -->
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td align="center">
           <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
 
-            <!-- Logo -->
-            <tr>
-              <td align="center" bgcolor="black" style="padding:20px;">
-                <img src="images/logo.jpg" alt="Logo" width="120" style="display:block; height:auto;">
-              </td>
-            </tr>
+        <!-- Logo -->
+        <tr>
+          <td align="center" bgcolor="black" style="padding:20px;">
+            <img src="images/logo.jpg" alt="Logo" width="120" style="display:block; height:auto;">
+          </td>
+        </tr>
 
-            <!-- Headline -->
-            <tr>
-              <td align="center" style="padding:20px;">
-                <h1 style="margin:0; font-size:32px; color:#333333; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
-                  2026 FIFA World Cup Tickets On Sale Now!
-                </h1>
-              </td>
-            </tr>
+        <!-- Headline -->
+        <tr>
+          <td align="center" style="padding:20px;">
+            <h1 class="animate-hero" style="margin:0; font-size:32px; color:#333333; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+              2026 FIFA World Cup Tickets On Sale Now!
+            </h1>
+          </td>
+        </tr>
 
-			<!-- Responsive Hero Image -->
-            <tr>
-              <td align="center">
-                <img src="images/hero.jpg" alt="Hero" width="600" style="width:100%; max-width:600px; display:block; height:auto;">
-              </td>
-            </tr>
+        <!-- Responsive Hero Image -->
+        <tr>
+          <td align="center">
+            <img src="images/hero.jpg" alt="Hero" width="600" style="width:100%; max-width:600px; display:block; height:auto;">
+          </td>
+        </tr>
 
-            <!-- Body copy with background image -->
-            <tr>
-              <td align="left" background="images/bg-texture.jpg" style="padding:20px; color:white; font-size:16px; line-height:24px; background-size:cover; background-position:center;">
-                <p style="margin:0 0 16px;">The world’s biggest sporting event is coming — and you can be there live! The 2026 FIFA World Cup promises unforgettable moments, legendary matches, and the chance to witness football’s greatest stars on the grandest stage.
+        <!-- Body copy with background image -->
+        <tr>
+          <td align="left" background="images/bg-texture.jpg" style="padding:20px; color:white; font-size:16px; line-height:24px; background-size:cover; background-position:center;">
+            <p style="margin:0 0 16px; color:white">The world’s biggest sporting event is coming — and you can be there live! The 2026 FIFA World Cup promises unforgettable moments, legendary matches, and the chance to witness football’s greatest stars on the grandest stage.
 
-					Tickets are now officially on sale, but availability is limited. Don’t wait until it’s too late — secure your seat and be part of the excitement that only the World Cup can deliver.
-					
-					Whether you’re supporting your favorite national team or just here for the love of the game, this is your chance to be part of history.</p>
-              </td>
-            </tr>
+            Tickets are now officially on sale, but availability is limited. Don’t wait until it’s too late — secure your seat and be part of the excitement that only the World Cup can deliver.
+            
+            Whether you’re supporting your favorite national team or just here for the love of the game, this is your chance to be part of history.</p>
+          </td>
+        </tr>
 
-            <!-- Button -->
-            <tr>
-              <td align="center" style="padding:20px;">
-                <a href="#" style="background-color:#ccb520; color:white; text-decoration:none; padding:12px 24px; font-size:16px; border-radius:4px; display:inline-block;">Buy Your Tickets Now</a>
-              </td>
-            </tr>
+        <!-- Button -->
+        <tr>
+          <td align="center" style="padding:20px;">
+            <a href="#" class="btn" style="background-color:#ccb520; color:white; text-decoration:none; padding:12px 24px; font-size:16px; border-radius:4px; display:inline-block;">Buy Your Tickets Now</a>
+          </td>
+        </tr>
 
-			<!-- Footer information: Always include an unsubscribe link! -->
-            <tr>
-              <td align="center" bgcolor="#f0f0f0" style="padding:20px; font-size:12px; color:#999999;">
-                <p style="margin:0;">You are receiving this email because you are subscribed to our newsletter.</p>
-                <p style="margin:0;"><a href="#" style="color:#999999; text-decoration:underline;">Unsubscribe</a></p>
-              </td>
-            </tr>
+        <!-- NEW: Two-column component -->
+        <tr>
+          <td align="center" style="padding:8px 20px;">
+            <!-- Two-column (table-based for email compatibility) -->
+            <table class="two-col" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="table-layout:fixed;">
+              <tr>
+                <!-- Left column: image -->
+                <td class="col" width="50%" valign="top">
+                  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td style="background:#ffffff; border-radius:8px; overflow:hidden;">
+                        <img src="images/stadium.jpg" alt="Stadium" class="fluid" style="display:block; width:100%; height:auto;">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
 
-          </table>
-        </td>
-      </tr>
-    </table>
+                <!-- Right column: text + checkbox toggle -->
+                <td class="col" width="50%" valign="top">
+                  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td style="background:#ffffff; border-radius:8px; padding:12px;">
+                        <h2 style="margin:0 0 8px 0; font-size:20px; color:#222222; font-family:Arial, Helvetica, sans-serif;">Plan Your Trip</h2>
+                        <p style="margin:0 0 12px 0; color:#555555; font-size:14px;">Need travel? Check our curated packages — hotels, transfers, and match-day seats bundled.</p>
+
+                        <!-- Checkbox toggle (checked box technique) -->
+                        <input type="checkbox" id="more-info" class="hidden-input" aria-hidden="true">
+                        <label for="more-info" style="display:inline-block; cursor:pointer; color:#ccb520; font-weight:bold; text-decoration:underline; margin-bottom:8px;">View package details</label>
+
+                        <!-- more-details: will show when #more-info is checked (supported clients) -->
+                        <div class="more-details toggle-content" style="margin-top:8px; font-size:13px; color:#444444;">
+                          <p style="margin:0 0 6px 0;">• 3-night packages in host cities<br>• Airport transfers included<br>• Flexible match date options</p>
+                          <p style="margin:0;"><a href="#" style="color:#ccb520; text-decoration:underline;">See full packages</a></p>
+                        </div>
+
+                        <!-- Fallback for clients that don't support :checked — show small visible summary -->
+                        <div class="fallback-visible" style="display:none; font-size:13px; color:#666666; margin-top:8px;">
+                          <p style="margin:0;">(If interactive details don't appear, click 'See full packages' or reply to this email and we'll help.)</p>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr><td style="padding:10px 20px;"><div class="divider"></div></td></tr>
+
+        <!-- NEW: Three-column component -->
+        <tr>
+          <td align="center" style="padding:8px 20px;">
+            <!-- Radio buttons to switch city/pricing panels (radio technique) -->
+            <input type="radio" name="city" id="radio-a" class="hidden-input" checked>
+            <input type="radio" name="city" id="radio-b" class="hidden-input">
+            <input type="radio" name="city" id="radio-c" class="hidden-input">
+
+            <table width="100%" class="three-col" cellpadding="0" cellspacing="0" role="presentation" style="table-layout:fixed;">
+              <tr>
+                <td class="col" style="padding:6px;">
+                  <div class="feature" style="background:#ffffff;">
+                    <img src="images/seat.jpg" alt="Standard Seat" style="width:100%; max-width:160px; height:auto; margin:4px auto 8px auto; display:block; border-radius:8px;">                    
+                    <h3 style="margin:0; font-size:18px;">Standard</h3>
+                    <p style="margin:8px 0 12px 0;">Affordable seats near the action.</p>
+                    <label for="radio-a" style="display:inline-block; padding:8px 10px; border-radius:6px; background:#f4f4f4; cursor:pointer; text-decoration:none;">Select</label>
+                  </div>
+                </td>
+
+                <td class="col" style="padding:6px;">
+                  <div class="feature" style="background:#ffffff;">
+                    <img src="images/vip.jpg" alt="VIP" style="width:100%; max-width:160px; height:auto; margin:4px auto 8px auto; display:block; border-radius:8px;">                    
+                    <h3 style="margin:0; font-size:18px;">Premium</h3>
+                    <p style="margin:8px 0 12px 0;">Better seats + lounge access.</p>
+                    <label for="radio-b" style="display:inline-block; padding:8px 10px; border-radius:6px; background:#f4f4f4; cursor:pointer; text-decoration:none;">Select</label>
+                  </div>
+                </td>
+
+                <td class="col" style="padding:6px;">
+                  <div class="feature" style="background:#ffffff;">
+                    <img src="images/suite.jpg" alt="Suite" class="fluid" style="width:100%; max-width:160px; height:auto; margin:4px auto 8px auto; display:block; border-radius:8px;">                    
+                    <h3 style="margin:0; font-size:18px;">Suite</h3>
+                    <p style="margin:8px 0 12px 0;">Luxury suite — best view, VIP service.</p>
+                    <label for="radio-c" style="display:inline-block; padding:8px 10px; border-radius:6px; background:#f4f4f4; cursor:pointer; text-decoration:none;">Select</label>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Radio panels: details revealed by radio selection (works where :checked is supported) -->
+            <div class="radio-panels" style="margin-top:12px;">
+              <div class="panel-a radio-panel" style="background:#ffffff; border-radius:8px; padding:12px;">
+                <strong>Standard</strong> — From $120. Great for fans who want to be in the stadium atmosphere.
+              </div>
+              <div class="panel-b radio-panel" style="background:#ffffff; border-radius:8px; padding:12px;">
+                <strong>Premium</strong> — From $280. Includes lounge access and priority entry.
+              </div>
+              <div class="panel-c radio-panel" style="background:#ffffff; border-radius:8px; padding:12px;">
+                <strong>Suite</strong> — From $995. Private suite, catering, dedicated concierge.
+              </div>
+
+              <!-- Fallback: default visible information for clients that don't support radios -->
+              <div class="fallback-visible" style="display:none; margin-top:8px; font-size:13px; color:#666666;">
+                <p style="margin:0;">Can't interact? The Standard ticket is a safe, budget-friendly choice. Contact support for upgrades.</p>
+              </div>
+            </div>
+
+          </td>
+        </tr>
+
+        <tr><td style="padding:10px 20px;"><div class="divider"></div></td></tr>
+
+        <!-- Animated background promo bar -->
+        <tr>
+          <td align="center" style="padding:12px 20px;">
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td style="padding:16px; border-radius:10px; background:linear-gradient(90deg,#ccb520,#e6d07a);">
+                  <div class="animate-bg" style="background:linear-gradient(270deg,#ccb520,#e6d07a); padding:8px; border-radius:6px;">
+                    <p style="margin:0; font-weight:bold; color:#222222;">Limited-time discount — use code <strong>WORLD26</strong> for an extra 5% off selected packages.</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Primary CTA repeated for engagement -->
+        <tr>
+          <td align="center" style="padding:20px;">
+            <a href="#" class="btn" style="background-color:#ccb520; color:white; text-decoration:none; padding:12px 24px; font-size:16px; border-radius:4px; display:inline-block;">Buy Tickets & Packages</a>
+          </td>
+        </tr>
+
+        <!-- Footer information: Always include an unsubscribe link! -->
+        <tr>
+          <td align="center" bgcolor="#f0f0f0" style="padding:20px; font-size:12px; color:#999999;">
+            <p style="margin:0;">You are receiving this email because you are subscribed to our newsletter.</p>
+            <p style="margin:0;"><a href="#" style="color:#999999; text-decoration:underline;">Unsubscribe</a></p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+```
+
   </body>
 </html>
